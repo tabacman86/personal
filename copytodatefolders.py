@@ -1,7 +1,5 @@
 import os
 import sys
-import time
-import shutil
 import datetime
 
 def main(folder):
@@ -12,8 +10,21 @@ def main(folder):
 		filefullpath = os.path.join(folder,file)
 		date = datetime.datetime.fromtimestamp(float(os.path.getmtime(filefullpath))).strftime("%d-%m-%Y")
 		if not os.path.exists(os.path.join(folder,date)):
-			newfolder = os.path.join(folder,date)
-			os.makedirs(newfolder)
+			newfolder_base = os.path.join(folder,date)
+			os.makedirs(newfolder_base)
+		filename = str(file)
+		if filename.endswith('.jpg'):
+			try:
+				newfolder = os.path.join(newfolder_base,'JPG')
+				os.makedirs(newfolder)
+			except:
+				pass
+		else:
+			try:
+				newfolder = os.path.join(newfolder_base, 'MOV')
+				os.makedirs(newfolder)
+			except:
+				pass
 		os.rename(filefullpath,os.path.join(newfolder,file))
 	
 
